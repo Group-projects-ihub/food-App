@@ -4,12 +4,12 @@ Thank you for your interest in contributing to Yumlink! We appreciate your help 
 ## Getting Started
 To get started, please follow these steps:
 
-Fork the repository and clone it to your local machine.
+Clone it to your local machine.
 Install the necessary dependencies by running npm install.
-Start the development server by running npm start.
+Start the development server by running npm run dev.
 Create a new branch for your changes by running git checkout -b my-feature-branch.
 Make your changes and commit them with a descriptive commit message.
-Push your changes to your forked repository by running git push origin my-feature-branch.
+Push your changes to your clone repository by running git push origin my-feature-branch.
 Create a pull request to merge your changes into the main repository.
 ## Guidelines
 When contributing to this project, please follow these guidelines:
