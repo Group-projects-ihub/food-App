@@ -22,7 +22,7 @@ Document your changes in the pull request description.
 ## Tasks
 Here are some tasks that need to be completed for this project:
 
-- Implement the login and registration pages.
+- Implement the login and registration pages. - SageBeme
 - Implement the menu and ordering pages.
 - Implement the checkout and payment pages.
 - Add support for multiple restaurants.
