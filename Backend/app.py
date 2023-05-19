@@ -10,11 +10,15 @@ from flasgger import Swagger
 from models import storage
 import os
 from werkzeug.exceptions import HTTPException
+from werkzeug.utils import secure_filename
 
+UPLOAD_FOLDER = './ImageFolder'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'bmp', 'svg'}
 # Global Flask Application Variable: app
 app = Flask(__name__)
 swagger = Swagger(app)
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # global strict slashes
 app.url_map.strict_slashes = False
 
