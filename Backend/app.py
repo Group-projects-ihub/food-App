@@ -55,7 +55,7 @@ def handle_404(exception):
 @app.errorhandler(400)
 def handle_404(exception):
     """
-    handles 400 errros, in the event that global error handler fails
+    handles 400 errors, in the event that global error handler fails
     """
     code = exception.__str__().split()[0]
     description = exception.description
