@@ -3,8 +3,12 @@
 
 from uuid  import uuid4
 from datetime import datetime
+from sqlalchemy.ext.declarative import declarative_base
 
-class BaseModel:
+Base = declarative_base()
+
+
+class BaseModel(Base):
     """Base model for all models in the project"""
     
     def __init__(self, *args, **kwargs):
