@@ -3,8 +3,7 @@
 Contains class BaseModel
 """
 
-import models
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String, Date
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
 
@@ -52,7 +51,6 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-  t
 
     def delete(self):
         """delete the current instance from the storage"""
