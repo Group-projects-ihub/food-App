@@ -7,6 +7,7 @@ import models
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
+from datetime import datetime
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -51,7 +52,7 @@ class BaseModel:
         self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
-    
+
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
