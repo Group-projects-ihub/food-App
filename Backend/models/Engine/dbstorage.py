@@ -43,8 +43,7 @@ class DBStorage:
         #                                      database))
         self.__engine = create_engine(url_object, pool_pre_ping=True)  # pool_pre_ping tests connections before using them
         
-        if HBNB_ENV == "test":
-            Base.metadata.drop_all(self.__engine)
+        
 
     def all(self, cls=None):
         """query on the current database session"""
