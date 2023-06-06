@@ -2,6 +2,8 @@
 """Rider class"""
 
 from models.basemodel import BaseModel, Base
+import models
+import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 
 
