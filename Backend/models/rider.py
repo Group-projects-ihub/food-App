@@ -2,13 +2,15 @@
 """Rider class"""
 
 from models.basemodel import BaseModel, Base
+import models
+import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 
 
 class Rider(BaseModel, Base):
     """ base class for all riders"""
     
-    id = Column(String(60), primary_key=True)
+    __tablename__ = 'riders'
     phone_number = Column(String(60), nullable=False)
     name = Column(String(60), nullable=False)
     age = Column(Integer, nullable=False)

@@ -3,7 +3,9 @@
 """ User class for the Food app"""
 
 from models.basemodel import BaseModel, Base
+import sqlalchemy
 from sqlalchemy import Column, String
+import models
 
 class User(BaseModel, Base):
     """User class for the Food app"""

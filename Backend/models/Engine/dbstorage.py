@@ -9,8 +9,12 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine, URL
 from sqlalchemy.orm import scoped_session, sessionmaker
+from models.food import Food
+from models.users import User
+# from models.order import Order
+from models.rider import Rider
 
-classes = {}
+classes = {"User": User, "Rider": Rider}
 
 
 class DBStorage:
@@ -23,13 +27,12 @@ class DBStorage:
         """
         # The object URL is a string containing the information needed
         # to open a database connection.
-        url_object = URL.create(
-            "mysql+mysqldb",
-            user="app_user",
-            password="food_pwd",
-            host="localhost",
-            database="food_App_db",
-        )
+    
+        user="app_admin"
+        password="food_pwd"
+        host="localhost"
+        database="food_App_db"
+        
 
         # user = getenv('FOOD_MYSQL_USER')
         # password = getenv('FOOD_MYSQL_PWD')
@@ -41,10 +44,12 @@ class DBStorage:
         #                                      password,
         #                                      host,
         #                                      database))
-        self.__engine = create_engine(url_object, pool_pre_ping=True)  # pool_pre_ping tests connections before using them
         
-        if HBNB_ENV == "test":
-            Base.metadata.drop_all(self.__engine)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                      format(user, password, host, database))
+        # self.__engine = create_engine(url_object, pool_pre_ping=True)  # pool_pre_ping tests connections before using them
+        
+        
 
     def all(self, cls=None):
         """query on the current database session"""

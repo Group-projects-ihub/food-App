@@ -10,11 +10,22 @@ from flasgger import Swagger
 from models import storage
 import os
 from werkzeug.exceptions import HTTPException
+from werkzeug.utils import secure_filename
+# from models.food import Food
+from models.basemodel import BaseModel, Base
+from models.users import User
+# from models.order import Order
+from models.rider import Rider
+import models
 
+
+UPLOAD_FOLDER = './ImageFolder'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'bmp', 'svg'}
 # Global Flask Application Variable: app
 app = Flask(__name__)
 swagger = Swagger(app)
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # global strict slashes
 app.url_map.strict_slashes = False
 
@@ -22,13 +33,13 @@ app.url_map.strict_slashes = False
 host = os.getenv('FOOD_APP_API_HOST', '0.0.0.0')
 port = os.getenv('FOOD_APP_API_PORT', 5000)
 
-#Cross-Origin Resource Sharing
+# Cross-Origin Resource Sharing
 cors = CORS(app, origins="0.0.0.0")
 cors = CORS(app, resources={r'/*': {'origins': host}})
 cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 # app_views BluePrint defined in api.v1.views
-#app.register_blueprint()
+# app.register_blueprint()
 
 
 # begin flask page rendering
