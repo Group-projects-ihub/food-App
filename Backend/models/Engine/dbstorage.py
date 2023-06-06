@@ -5,13 +5,17 @@ Contains the class DBStorage
 
 import models
 from models.basemodel import BaseModel, Base
- 
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, URL
 from sqlalchemy.orm import scoped_session, sessionmaker
+from models.food import Food
+from models.users import User
+# from models.order import Order
+from models.rider import Rider
+from models.restaurants import Restaurant
 
-classes = {}
+classes = {"User": User, "Rider": Rider, "Restaurant": Restaurant, "Food": Food}
 
 
 class DBStorage:
@@ -20,25 +24,39 @@ class DBStorage:
     __session = None
 
     def __init__(self):
-        """Instantiate a DBStorage object"""
-        HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
-        HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
-        HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
-        HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
-        HBNB_ENV = getenv('HBNB_ENV')
+        """Instantiate a DBStorage object
+        """
+        # The object URL is a string containing the information needed
+        # to open a database connection.
+    
+        user="app_admin"
+        password="food_pwd"
+        host="localhost"
+        database="food_App_db"
+        
+
+        # user = getenv('FOOD_MYSQL_USER')
+        # password = getenv('FOOD_MYSQL_PWD')
+        # host = getenv('FOOD_MYSQL_HOST')
+        # db = getenv('FOOD_MYSQL_DB')
+        # env = getenv('FOOD_ENV')
+        # self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+        #                               format(user,
+        #                                      password,
+        #                                      host,
+        #                                      database))
+        
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                      format(HBNB_MYSQL_USER,
-                                             HBNB_MYSQL_PWD,
-                                             HBNB_MYSQL_HOST,
-                                             HBNB_MYSQL_DB))
-        if HBNB_ENV == "test":
-            Base.metadata.drop_all(self.__engine)
+                                      format(user, password, host, database))
+        # self.__engine = create_engine(url_object, pool_pre_ping=True)  # pool_pre_ping tests connections before using them
+        
+        
 
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
         for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
+            if cls == None or cls == classes[clss] or cls == clss:
                 objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
@@ -55,7 +73,7 @@ class DBStorage:
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
-        if obj is not None:
+        if obj != None:
             self.__session.delete(obj)
 
     def reload(self):
@@ -66,7 +84,8 @@ class DBStorage:
         self.__session = Session
 
     def close(self):
-        """call remove() method on the private session attribute"""
+        """call remove() method on the private session attribute
+        close session - stop using it"""
         self.__session.remove()
 
     def get(self, cls, id):
@@ -98,3 +117,4 @@ class DBStorage:
             count = len(models.storage.all(cls).values())
 
         return count
+

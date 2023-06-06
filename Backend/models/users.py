@@ -4,7 +4,7 @@
 
 from models.basemodel import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, VARCHAR, INTEGER
-
+import models
 
 class User(BaseModel, Base):
     """User class for the Food app"""
