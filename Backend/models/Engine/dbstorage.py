@@ -13,8 +13,9 @@ from models.food import Food
 from models.users import User
 # from models.order import Order
 from models.rider import Rider
+from models.restaurants import Restaurant
 
-classes = {"User": User, "Rider": Rider}
+classes = {"User": User, "Rider": Rider, "Restaurant": Restaurant, "Food": Food}
 
 
 class DBStorage:
