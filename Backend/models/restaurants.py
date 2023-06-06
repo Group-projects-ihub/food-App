@@ -1,10 +1,10 @@
 from datetime import datetime
 from sqlalchemy import Column, String, DateTime
 
-from basemodel import Base
+from models.basemodel import BaseModel, Base
 
 
-class Restaurant(Base):
+class Restaurant(BaseModel, Base):
     """Model class for a restaurant"""
 
     name = Column(String(255), nullable=False)
