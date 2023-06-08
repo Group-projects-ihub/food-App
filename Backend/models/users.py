@@ -16,8 +16,8 @@ class User(BaseModel, Base):
     email = Column(String(128), nullable=False)
     role = Column(VARCHAR(255), nullable=False)
     password = Column(VARCHAR(128), nullable=False)
-    phone_number = Column(INTEGER(128), nullable=False)
-    id_number = Column(INTEGER(128), nullable=False)
+    phone_number = Column(INTEGER, nullable=False)
+    id_number = Column(INTEGER, nullable=False)
     # location = Column(String(128), nullable=True)
 
     def __init__(self, *args, **kwargs):

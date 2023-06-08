@@ -6,6 +6,7 @@
 from models.basemodel import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, VARCHAR, INTEGER
 from enum import Enum
+from models.restaurants import Restaurant
 # from enum import Enum  # for enum requirements in SQLAlchemy
 
 
@@ -31,8 +32,7 @@ class Food(BaseModel, Base):
 #     image_path = Column(String(256), nullable=True)
     description = Column(VARCHAR(255), nullable=False)
     food_category = Column(String(128), nullable=False)
-    restaurant_id = Column(INTEGER(128), ForeignKey(
-        'restaurant.id'), nullable=False)  # restaurant_id is the foreign key
+    restaurant_id = Column(VARCHAR(255), ForeignKey('restaurants.id'), nullable=False) 
     # default=Food_Category_Choices.LUNCH, nullable=False)
     description = Column(String(512), nullable=False)
     # food_type = Column(Enum(Food_Choices), default=Food_Choices.FOOD, nullable=False)
