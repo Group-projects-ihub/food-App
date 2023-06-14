@@ -5,17 +5,20 @@ Contains the class DBStorage
 
 import models
 from models.basemodel import BaseModel, Base
+from sqlalchemy.exc import SQLAlchemyError
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine, URL
 from sqlalchemy.orm import scoped_session, sessionmaker
-from models.food import Food
+#from models.food import Food
 from models.users import User
 # from models.order import Order
 from models.rider import Rider
-from models.restaurants import Restaurant
+#from models.restaurants import Restaurant
+from dotenv import load_dotenv
 
-classes = {"User": User, "Rider": Rider, "Restaurant": Restaurant, "Food": Food}
+load_dotenv()
+
+classes = {"User": User, "Rider": Rider}
 
 
 class DBStorage:
@@ -28,29 +31,31 @@ class DBStorage:
         """
         # The object URL is a string containing the information needed
         # to open a database connection.
-    
-        user="app_admin"
-        password="food_pwd"
-        host="localhost"
-        database="food_App_db"
-        
-
-        # user = getenv('FOOD_MYSQL_USER')
-        # password = getenv('FOOD_MYSQL_PWD')
-        # host = getenv('FOOD_MYSQL_HOST')
-        # db = getenv('FOOD_MYSQL_DB')
-        # env = getenv('FOOD_ENV')
-        # self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-        #                               format(user,
-        #                                      password,
-        #                                      host,
-        #                                      database))
-        
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                      format(user, password, host, database))
-        # self.__engine = create_engine(url_object, pool_pre_ping=True)  # pool_pre_ping tests connections before using them
-        
-        
+        #url_object = URL.create(
+        #    "mysql+mysqldb",
+        #    user="app_user",
+        #    password="food_pwd",
+        #    host="localhost",
+        #    database="food_App_db",
+        #)
+        try:
+            user = getenv("FOOD_MYSQL_USER")
+            password = getenv("FOOD_MYSQL_PWD")
+            host = getenv("FOOD_MYSQL_HOST")
+            db = getenv("FOOD_MYSQL_DB")
+            env = getenv("FOOD_ENV")
+            self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                          format(user,
+                                                 password,
+                                                 host,
+                                                 db))
+            self.reload()
+            #self.__engine = create_engine(url_object, pool_pre_ping=True)  # pool_pre_ping tests connections before using them
+            self.__engine.connect()
+            if env == "test":
+                Base.metadata.drop_all(self.__engine)
+        except SQLAlchemyError as e:
+            print("An error occurred while establishing the database connection:", str(e))
 
     def all(self, cls=None):
         """query on the current database session"""

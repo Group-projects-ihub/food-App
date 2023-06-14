@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: python-server
+    command: python3 app.py
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/food-app-backend
+    depends_on:
+      - mysql
+    env_file:
+      - .env
+
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - .:/db_volume
+    environment:
+      - MYSQL_ROOT_PASSWORD=${FOOD_MYSQL_PWD}
+      - MYSQL_USER=${FOOD_MYSQL_USER}
+      - MYSQL_PASSWORD=${FOOD_MYSQL_PWD}
+      - MYSQL_DATABASE=${FOOD_MYSQL_DB}
